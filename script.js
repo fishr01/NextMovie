@@ -32,7 +32,7 @@ function getSimilar(id){
       	 for(var i = 0; i < length; i++)
       	 {
       	 	console.log(json.results[i]);
-      	 	jQuery("#results").append("<tr><td>" + json.results[i].original_title + "</td></tr>")
+      	 	jQuery("#results").append("<tr><td>" + json.results[i].original_title + "</td><td>"+ json.results[i].vote_average + "</td></tr>")
       	 }
 	    },
 	    error: function(e) {
