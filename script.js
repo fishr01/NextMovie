@@ -53,9 +53,11 @@ jQuery('input').on('change', function($) {
         dataType: 'jsonp',
         success: function(json) {
         length = json.results.length;
-      	 
-      	 	getSimilar(json.results[0].id);
-      	 
+        jQuery("#current").addClass('active');
+        jQuery("#current").css('background-image',"url(http://image.tmdb.org/t/p/w500/" + json.results[0].backdrop_path +")");
+      	jQuery("#current").append("<div><p>Current Match: " + json.results[0].original_title + " with a rating of:"+ json.results[0].vote_average + "</p></div>");
+      	getSimilar(json.results[0].id);
+      	
 	    },
 	    error: function(e) {
 	       console.log(e.message);
