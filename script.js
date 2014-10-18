@@ -1,3 +1,4 @@
+//Script to get movies similar to current
 function getSimilar(id){
 	   jQuery("#results").empty();
     var url = 'https://api.themoviedb.org/3/movie/' + id +'/similar?api_key=224dda2ca82558ef0e550aa711aae69c';
@@ -37,18 +38,20 @@ jQuery( "input" ).autocomplete({
             type : 'GET',
             url: 'https://api.themoviedb.org/3/search/movie?api_key=224dda2ca82558ef0e550aa711aae69c&search_type=ngram&query=' + request.term,
             success: function(data) {
-            resultarray = jQuery.map( data, function(item) {
+
+            
                 var title = [];
-                console.log('loop');
+                
                 for(var mov=0; mov < data.results.length; mov++){
                   
                   title[mov] = data.results[mov].original_title;
                  
                 }
-                return title;
-            })
+                console.log(data);
+                
             
-            response(resultarray);
+            
+            response(title);
           },
           error: function(data) {
               jQuery('input').removeClass('ui-autocomplete-loading');  
@@ -71,6 +74,7 @@ jQuery( "input" ).autocomplete({
 });
 //End Autocomplete Code
 
+//Current Movie information query.
 function foundmovie(moviename){
     var url = 'https://api.themoviedb.org/3/search/movie?api_key=224dda2ca82558ef0e550aa711aae69c&query=' + moviename + '&page=1';
     jQuery.ajax({
