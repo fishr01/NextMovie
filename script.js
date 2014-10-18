@@ -20,7 +20,6 @@ function getSimilar(id){
 	    error: function(e) {
 	       console.log(e.message);
 	    }
-    
 });
 
 }
@@ -29,6 +28,7 @@ function getSimilar(id){
 
 jQuery( "input" ).autocomplete({
       appendTo: '#searchbar',
+      delay: 500,
       source: function( request, response ) {
        
         jQuery.ajax({
@@ -38,20 +38,11 @@ jQuery( "input" ).autocomplete({
             type : 'GET',
             url: 'https://api.themoviedb.org/3/search/movie?api_key=224dda2ca82558ef0e550aa711aae69c&search_type=ngram&query=' + request.term,
             success: function(data) {
-
-            
-                var title = [];
-                
-                for(var mov=0; mov < data.results.length; mov++){
-                  
-                  title[mov] = data.results[mov].original_title;
-                 
-                }
-                console.log(data);
-                
-            
-            
-            response(title);
+                var title = [];                
+                  for(var mov=0; mov < data.results.length && mov < 10; mov++){                  
+                    title[mov] = data.results[mov].original_title;
+                  }
+                response(title);
           },
           error: function(data) {
               jQuery('input').removeClass('ui-autocomplete-loading');  
@@ -60,13 +51,19 @@ jQuery( "input" ).autocomplete({
       },
       minLength: 3,
       open: function() {
-
+          jQuery('ul.ui-autocomplete').addClass('opened');
+          jQuery('.ui-helper-hidden-accessible').css('display' , 'block');
       },
       close: function() {
+          jQuery('ul.ui-autocomplete').removeClass('opened');
+          jQuery('.ui-helper-hidden-accessible').css('display' , 'none');
+      },
+      change: function(event,ui) {
+          jQuery('ul.ui-autocomplete').addClass('opened');
 
       },
       focus:function(event,ui) {
-
+          jQuery('ul.ui-autocomplete').addClass('opened');
       },
       select: function( event, ui ) {
           foundmovie(ui.item.value);

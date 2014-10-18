@@ -25,3 +25,83 @@ input{
     
     border-radius:10px;
 }
+
+#current.active{
+    margin-bottom:10px;
+    overflow:hidden;
+    border-radius: 0 0 5px 5px;
+}
+.ui-autocomplete{
+    background:#ccc;
+    opacity: 0;
+    -moz-transition: opacity 1.4s ease-in-out;
+    -o-transition: opacity 1.4s ease-in-out;
+    -webkit-transition: opacity 1.4s ease-in-out;
+    transition: opacity 1.4s ease-in-out;
+}
+
+.height-transition {
+        -webkit-transition: max-height 0.5s ease-in-out;
+        -moz-transition: max-height 0.5s ease-in-out;
+        -o-transition: max-height 0.5s ease-in-out;
+        transition: max-height 0.5s ease-in-out;
+        overflow-y: hidden;            
+    }
+    .height-transition-hidden {            
+        max-height: 0;            
+    }
+
+.ui-autocomplete.opened{
+                  visibility:visible!important;
+opacity: 1;
+    -moz-transition: opacity 1.4s ease-in-out;
+    -o-transition: opacity 1.4s ease-in-out;
+    -webkit-transition: opacity 1.4s ease-in-out;
+    transition: opacity 1.4s ease-in-out;
+}
+.ui-autocomplete li{
+    list-style:none;
+    cursor:pointer;
+    padding:10px;
+    width:50%;
+    display:inline-block;
+}
+.ui-autocomplete li:hover{
+    background:#eee;
+}
+
+#current p{
+    padding:5px;
+    margin:0;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: none;
+  text-align:center;
+  margin:0 auto;
+  
+  transition: 1.3s;
+  border-radius: 0px;
+}
+input[type="text"]:focus,
+.style-4 input[type="text"].focus {
+  
+ height:50px;
+    transition:1.0s;
+}
+
+p{
+    padding:10px;
+    
+}
+
+#current img{
+    float:left;
+    margin-right:10px;
+}
+
+.ui-helper-hidden-accessible{
+    margin:0 auto;
+    text-align:center;
+}
