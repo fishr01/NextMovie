@@ -105,3 +105,49 @@ p{
     margin:0 auto;
     text-align:center;
 }
+
+body{
+    background-color: #222;
+}
+#searchbar{
+    position:absolute;
+    top:30%;
+    width:100%;
+    border:5px solid #FF8000;
+    border-radius:10px;
+    color:#000;
+    text-decoration:uppercase;
+    z-index:999;
+}
+
+.container{
+    position:relative;
+    height:100%;
+}
+.top-imagewall{
+    opacity:0.1;
+}
+.top-imagewall img{
+    -webkit-filter: grayscale(80%);
+    -moz-filter: grayscale(80%);
+    filter: grayscale(80%);
+    width:10%;
+    float:left;
+    opacity:0;
+    display:inline-block;
+}
+
+.bottom-imagewall{
+    opacity:0.1;
+    position:absolute;
+    bottom:0px;
+}
+.bottom-imagewall img{
+    -webkit-filter: grayscale(80%);
+    -moz-filter: grayscale(80%);
+    filter: grayscale(80%);
+    width:10%;
+    float:left;
+    opacity:0;
+    display:inline-block;
+}
