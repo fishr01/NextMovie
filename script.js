@@ -15,7 +15,7 @@ function getSimilar(id){
       	 {
       	 	jQuery("#results").append("<tr><td>" + json.results[i].original_title + "</td><td>"+ json.results[i].vote_average + "</td></tr>")
       	 }
-
+         jQuery(".response").effect( "slide", {direction:"up", easing: "easeOutCubic", duration:5000});
 	    },
 	    error: function(e) {
 	       console.log(e.message);
@@ -27,7 +27,7 @@ function getSimilar(id){
 //Adding Autocomplete to search block
 
 jQuery( "input" ).autocomplete({
-      appendTo: '#searchbar',
+      appendTo: '#autocomplete-options',
       delay: 500,
       source: function( request, response ) {
        
@@ -38,11 +38,16 @@ jQuery( "input" ).autocomplete({
             type : 'GET',
             url: 'https://api.themoviedb.org/3/search/movie?api_key=224dda2ca82558ef0e550aa711aae69c&search_type=ngram&query=' + request.term,
             success: function(data) {
-                var title = [];                
+                var title;
+                var movielist = [];    
+                
                   for(var mov=0; mov < data.results.length && mov < 10; mov++){                  
-                    title[mov] = data.results[mov].original_title;
+                    title = data.results[mov].original_title + '(' +data.results[mov].release_date +')';
+                    movieid = data.results[mov].id;
+                    movielist[mov] = {'label': title , 'value': movieid};
                   }
-                response(title);
+
+                response(movielist);
           },
           error: function(data) {
               jQuery('input').removeClass('ui-autocomplete-loading');  
@@ -53,17 +58,21 @@ jQuery( "input" ).autocomplete({
       open: function() {
           jQuery('ul.ui-autocomplete').addClass('opened');
           jQuery('.ui-helper-hidden-accessible').css('display' , 'block');
+          jQuery('#autocomplete-options').css('display' , 'block');
       },
       close: function() {
           jQuery('ul.ui-autocomplete').removeClass('opened');
           jQuery('.ui-helper-hidden-accessible').css('display' , 'none');
+          jQuery('#autocomplete-options').css('display' , 'none');
       },
       change: function(event,ui) {
           jQuery('ul.ui-autocomplete').addClass('opened');
+          jQuery('#autocomplete-options').css('display' , 'block');
 
       },
       focus:function(event,ui) {
           jQuery('ul.ui-autocomplete').addClass('opened');
+          jQuery('#autocomplete-options').css('display' , 'block');
       },
       select: function( event, ui ) {
           foundmovie(ui.item.value);
@@ -72,8 +81,8 @@ jQuery( "input" ).autocomplete({
 //End Autocomplete Code
 
 //Current Movie information query.
-function foundmovie(moviename){
-    var url = 'https://api.themoviedb.org/3/search/movie?api_key=224dda2ca82558ef0e550aa711aae69c&query=' + moviename + '&page=1';
+function foundmovie(movieid){
+    var url = 'https://api.themoviedb.org/3/movie/' + movieid + '?api_key=224dda2ca82558ef0e550aa711aae69c';
     jQuery.ajax({
        type: 'GET',
         url: url,
@@ -81,16 +90,18 @@ function foundmovie(moviename){
         contentType: "application/json",
         dataType: 'jsonp',
         success: function(json) {
-        length = json.results.length;
+        console.log(json);
         jQuery("#current").empty();
-        console.log(json.results[0]);
-        jQuery("#current").addClass('active');
-        jQuery("#current").css('background-image',"url(http://image.tmdb.org/t/p/w500/" + json.results[0].backdrop_path +")");
-        jQuery("#current").append("<img src='http://image.tmdb.org/t/p/w500" + json.results[0].poster_path + "' width:=200px' height='280px' />");
-      	jQuery("#current").append("<p>Current Match: " + json.results[0].original_title  + "</p>");
-        jQuery("#current").append("<p>Released: " + json.results[0].release_date +"</p>");
-        jQuery("#current").append("<p>Rating: " + json.results[0].vote_average + "</p>");
-      	getSimilar(json.results[0].id);
+        jQuery("#current").addClass('active');     
+        jQuery("#current").css('background-image',"url(http://image.tmdb.org/t/p/w500/" + json.backdrop_path +")");
+        jQuery("#current").append("<img src='http://image.tmdb.org/t/p/w500" + json.poster_path + "' width:=200px' height='280px' />");
+      	jQuery("#current").append("<p>Current Match: " + json.original_title  + "</p>");
+        jQuery("#current").append("<p>Released: " + json.release_date +"</p>");
+        jQuery("#current").append("<p>Rating: " + json.vote_average + "</p>");
+        jQuery("#current").effect( "slide", {direction:"up", easing: "easeOutCubic", duration:5000}, function() {
+           getSimilar(json.id);
+        });
+      	
       	
 	    },
 	    error: function(e) {
@@ -148,8 +159,6 @@ function animateload(i){
     }, 5000, function() {
     // Animation complete.
     });
-
-    console.log('working');
 }
 jQuery(document).ready(function() {
   latestmovie();

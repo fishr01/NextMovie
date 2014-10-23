@@ -27,13 +27,16 @@ input{
 }
 
 #current.active{
-    margin-bottom:10px;
+    
     overflow:hidden;
     border-radius: 0 0 5px 5px;
+    border-left: 3px solid #000;
+    border-right: 3px solid #000;
 }
 .ui-autocomplete{
     background:#ccc;
     opacity: 0;
+    -webkit-padding-start: 5px;
     -moz-transition: opacity 1.4s ease-in-out;
     -o-transition: opacity 1.4s ease-in-out;
     -webkit-transition: opacity 1.4s ease-in-out;
@@ -75,6 +78,17 @@ opacity: 1;
     margin:0;
 }
 
+#searchbar input[placeholder]{
+    font-size:20px;
+}
+
+.response{
+    background:#fff;
+    z-index:99999!important;
+    border-right:3px solid #000;
+    border-left:3px solid #000;
+}
+
 input[type="text"] {
   padding: 10px;
   border: none;
@@ -107,25 +121,29 @@ p{
 }
 
 body{
-    background-color: #222;
+    background-color: #222!important;
 }
 #searchbar{
-    position:absolute;
-    top:30%;
+    
+    top:0%;
     width:100%;
-    border:5px solid #FF8000;
-    border-radius:10px;
+    border-top:0px!important;
+    border:3px solid #000;
+    border-radius:0px;
     color:#000;
-    text-decoration:uppercase;
+    text-transform: uppercase;
     z-index:999;
 }
 
 .container{
     position:relative;
     height:100%;
+    z-index: 4;
 }
 .top-imagewall{
     opacity:0.1;
+    position: absolute;
+    
 }
 .top-imagewall img{
     -webkit-filter: grayscale(80%);
