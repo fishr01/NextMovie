@@ -128,46 +128,7 @@ function foundmovie(movieid){
     Load in background images
 -----------------------------------*/
 
-function latestmovie(){
-    var url = 'https://api.themoviedb.org/3/movie/popular?api_key=224dda2ca82558ef0e550aa711aae69c';
-    jQuery.ajax({
-       type: 'GET',
-        url: url,
-        async: false,
-        contentType: "application/json",
-        dataType: 'jsonp',
-        success: function(json) {
-            var resultscount = 10;
-            
-            for(var i = 0; i < resultscount; i++){
-              jQuery(".top-imagewall").append("<img id='back-img-up" + i + "' src='http://image.tmdb.org/t/p/w500" + json.results[i].poster_path + "' width='10%' height='280px'  onload='jQuery(this).animate({opacity: 1,}, 5000);'/>");
-            }   
-      },
-      error: function(e) {
-         console.log(e.message);
-      }
-    });
-    //Load in bottom row
-    url = 'https://api.themoviedb.org/3/movie/popular?api_key=224dda2ca82558ef0e550aa711aae69c&page=2';
-    jQuery.ajax({
-       type: 'GET',
-        url: url,
-        async: false,
-        contentType: "application/json",
-        dataType: 'jsonp',
-        success: function(json) {
-            var resultscount = 10;
-            
-            for(var i = 0; i < resultscount; i++){
-              jQuery(".bottom-imagewall").append("<img id='back-img-down" + i + "' src='http://image.tmdb.org/t/p/w500" + json.results[i].poster_path + "' width='10%' height='280px' onload='jQuery(this).animate({opacity: 1,}, 5000);'/>");
-             
-            }   
-      },
-      error: function(e) {
-         console.log(e.message);
-      }
-    });
-}
+
 function animateload(i){
     jQuery('#back-img-'+i).animate({
     opacity: 1,
@@ -175,7 +136,5 @@ function animateload(i){
     // Animation complete.
     });
 }
-jQuery(document).ready(function() {
-  latestmovie();
-});
+
     

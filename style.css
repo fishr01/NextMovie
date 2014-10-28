@@ -150,7 +150,7 @@ body{
     z-index: 4;
 }
 .top-imagewall{
-    opacity:0.1;
+    opacity:0.2;
     position: absolute;
     
 }
@@ -160,12 +160,12 @@ body{
     filter: grayscale(80%);
     width:10%;
     float:left;
-    opacity:0;
+    opacity:1;
     display:inline-block;
 }
 
 .bottom-imagewall{
-    opacity:0.1;
+    opacity:0.2;
     position:absolute;
     bottom:0px;
 }
@@ -175,6 +175,6 @@ body{
     filter: grayscale(80%);
     width:10%;
     float:left;
-    opacity:0;
+    opacity:1;
     display:inline-block;
 }
