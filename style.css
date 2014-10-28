@@ -19,6 +19,13 @@ input{
     margin:0 auto;
 }
 
+#results{
+    margin-bottom:0px;
+}
+#current{
+
+    display:none;
+}
 #current.active{
     height:280px;
     background:no-repeat right #ccc;
@@ -55,8 +62,9 @@ input{
     }
 
 .ui-autocomplete.opened{
-                  visibility:visible!important;
-opacity: 1;
+    visibility:visible!important;
+    opacity: 1;
+    border:3px solid #000;
     -moz-transition: opacity 1.4s ease-in-out;
     -o-transition: opacity 1.4s ease-in-out;
     -webkit-transition: opacity 1.4s ease-in-out;
@@ -68,6 +76,7 @@ opacity: 1;
     padding:10px;
     width:50%;
     display:inline-block;
+    text-align:center;
 }
 .ui-autocomplete li:hover{
     background:#eee;
@@ -85,8 +94,8 @@ opacity: 1;
 .response{
     background:#fff;
     z-index:99999!important;
-    border-right:3px solid #000;
-    border-left:3px solid #000;
+    border:3px solid #000;
+    display:none;
 }
 
 input[type="text"] {
@@ -95,14 +104,14 @@ input[type="text"] {
   text-align:center;
   margin:0 auto;
   
-  transition: 1.3s;
+  transition: 0.5s;
   border-radius: 0px;
 }
 input[type="text"]:focus,
 .style-4 input[type="text"].focus {
   
  height:50px;
-    transition:1.0s;
+    transition:0.5s;
 }
 
 p{
