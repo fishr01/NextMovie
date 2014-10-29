@@ -1,34 +1,8 @@
-//Script to get movies similar to current
-function getSimilar(id){
-	   
-    var url = 'https://api.themoviedb.org/3/movie/' + id +'/similar?api_key=224dda2ca82558ef0e550aa711aae69c';
-    jQuery.ajax({
-       type: 'GET',
-        url: url,
-        async: false,
-        contentType: "application/json",
-        dataType: 'jsonp',
-        success: function(json) {
-        
-        length = json.results.length;
-        if(length > 15){
-          length = 15;
-        }
-      	 for(var i = 0; i < length; i++)
-      	 {
-      	 	jQuery("#results").append("<tr><td>" + json.results[i].original_title + "</td><td>"+ json.results[i].vote_average + "</td></tr>")
-      	 }
-         jQuery("#results").show();
-         jQuery(".response").slideDown("2000");
-	    },
-	    error: function(e) {
-	       console.log(e.message);
-	    }
-});
 
-}
-
-//Adding Autocomplete to search block
+/*----------------------------------
+Autopredict / Autocomplete code running on main Input.
+Requires jQuery-UI to be loaded.
+----------------------------------*/
 
 jQuery( "input" ).autocomplete({
       appendTo: '#autocomplete-options',
@@ -73,7 +47,6 @@ jQuery( "input" ).autocomplete({
       },
       focus:function(event,ui) {
           jQuery('ul.ui-autocomplete').addClass('opened');
-          
       },
       select: function( event, ui ) {
           event.preventDefault();
@@ -81,7 +54,9 @@ jQuery( "input" ).autocomplete({
       }
 });//End Autocomplete Code
 
-
+/*-------------------------------------------------------------
+* Clear page Function is used to remove the current movie information
+-------------------------------------------------------------*/
 function clear_page(){
     jQuery('#current').empty();
     jQuery("#results").empty();
@@ -89,8 +64,11 @@ function clear_page(){
     jQuery('#current').slideUp();
 }
 
+
 /*----------------------------------
-    Current Movie information query.
+    Current Movie information query. 
+    Populates #current with the current selected movie information.
+    Proceeds to call (getSimilar) function.
 -----------------------------------*/
 function foundmovie(movieid){
     var url = 'https://api.themoviedb.org/3/movie/' + movieid + '?api_key=224dda2ca82558ef0e550aa711aae69c';
@@ -101,22 +79,16 @@ function foundmovie(movieid){
         contentType: "application/json",
         dataType: 'jsonp',
         success: function(json) {
-            jQuery("#current").empty();
+            clear_page();
             jQuery("#current").addClass('active');     
             jQuery("#current").css('background-image',"url(http://image.tmdb.org/t/p/w500/" + json.backdrop_path +")");
             jQuery("#current").append("<img src='http://image.tmdb.org/t/p/w500" + json.poster_path + "' width:=200px' height='280px' />");
-          	jQuery("#current").append("<p>Current Match: " + json.original_title  + "</p>");
+          	jQuery("#current").append("<div class='current_info'><p>Current Match: " + json.original_title  + "</p>");
             jQuery("#current").append("<p>Released: " + json.release_date +"</p>");
-            jQuery("#current").append("<p>Rating: " + json.vote_average + "</p>");
+            jQuery("#current").append("<p>Rating: " + json.vote_average + "</p></div>");
             jQuery('#current').slideDown("2000", function(){
                 getSimilar(json.id);
             });
-            
-           // jQuery("#current").effect( "slide", {direction:"up", easing: "easeOutCubic", duration:2000}, function() {
-           //   
-            //});
-      	
-      	
 	    },
 	    error: function(e) {
 	       console.log(e.message);
@@ -124,8 +96,40 @@ function foundmovie(movieid){
     });
 }
 
+/*--------------------------------------------
+*Request movies that are similar to the currenly selected movie.
+---------------------------------------------*/
+function getSimilar(id){
+     
+    var url = 'https://api.themoviedb.org/3/movie/' + id +'/similar?api_key=224dda2ca82558ef0e550aa711aae69c';
+    jQuery.ajax({
+       type: 'GET',
+        url: url,
+        async: false,
+        contentType: "application/json",
+        dataType: 'jsonp',
+        success: function(json) {
+
+          //Limit the results to 15.
+          length = json.results.length;
+          if(length > 15){
+            length = 15;
+          }
+           for(var i = 0; i < length; i++)
+           {
+            jQuery("#results").append("<tr><td>" + json.results[i].original_title + "</td><td>"+ json.results[i].vote_average + "</td></tr>")
+           }
+           jQuery("#results").show();
+           jQuery(".response").slideDown("2000");
+        },
+        error: function(e) {
+           console.log(e.message);
+       }
+    });
+
+}
 /*----------------------------------
-    Load in background images
+  Function to provied a smoother background poster art animation (Will not be needed once caching is working).
 -----------------------------------*/
 
 
